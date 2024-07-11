@@ -89,6 +89,8 @@ if [[ $(grep -E "^(ID|NAME)=" /etc/os-release | grep -q "ubuntu")$? == 0 ]]; the
   eval "$(fzf --bash)"
 fi
 
+ssh-add -q ~/.ssh/id_rsa
+
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Moved to starship 20-03-2024 for all my prompt needs.
