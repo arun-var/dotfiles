@@ -29,15 +29,15 @@ export SCRIPTS="$DOTFILES/scripts"
 # Go related. In general all executables and scripts go in .local/bin
 export GOBIN="$HOME/.local/bin"
 export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
-# export GOPATH="$HOME/.local/share/go"
-export GOPATH="$HOME/go/"
+export GOPATH="/usr/local/go/bin/"
+#export GOPATH="$HOME/go/"
 
 # get rid of mail notifications on MacOS
 unset MAILCHECK
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
-PATH="${PATH:+${PATH}:}"$SCRIPTS":"$HOME"/.local/bin:$HOME/dotnet" # appending
+PATH="${PATH:+${PATH}:}"$SCRIPTS":"$HOME"/.local/bin:"$GOPATH # appending
 
 # ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
 
