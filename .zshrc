@@ -61,10 +61,11 @@ path=(
     $HOME/bin
     $HOME/.local/bin
     $SCRIPTS
-    $HOME/.krew/bin
+    /opt/nvim-linux64/bin/
     $HOME/.rd/bin                   # Rancher Desktop
     /home/vscode/.local/bin         # Dev Container Specifics
     /root/.local/bin                # Dev Container Specifics
+    /home/arun/.local/bin
 )
 
 # Remove duplicate entries and non-existent directories
@@ -81,6 +82,7 @@ if [ -d "/home/linuxbrew/.linuxbrew" ]; then
      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
+eval "$(direnv hook zsh)"
 
 # ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -114,7 +116,7 @@ prompt pure
 
 
 alias v=nvim
-
+alias vim=nvim
 alias scripts='cd $SCRIPTS'
 alias cdblog="cd ~/websites/blog"
 alias c="clear"
@@ -199,3 +201,5 @@ zstyle ':completion:*' menu select
 
 
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if [ -e /home/arun/.nix-profile/etc/profile.d/nix.sh ]; then . /home/arun/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

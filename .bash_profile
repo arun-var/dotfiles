@@ -17,3 +17,5 @@ if [ -r ~/.bashrc ]; then
 fi
 
 export XDG_CONFIG_HOME="$HOME"/.config
+
+if [ -e /home/arun/.nix-profile/etc/profile.d/nix.sh ]; then . /home/arun/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

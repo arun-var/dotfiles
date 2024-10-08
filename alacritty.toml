@@ -17,4 +17,4 @@ x = 7
 y = 0
 
 [shell]
-program = "/usr/bin/bash"
+program = "/usr/bin/zsh"

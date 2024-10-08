@@ -6,7 +6,7 @@
 
 # create directories
 export XDG_CONFIG_HOME="$HOME"/.config
-
+export DOTFILES_DIR="$PWD"
 #mkdir -p "$XDG_CONFIG_HOME"/bash
 #mkdir -p "$XDG_CONFIG_HOME"/alacritty
 #mkdir -p "$XDG_CONFIG_HOME"/alacritty/themes
@@ -46,6 +46,10 @@ export XDG_CONFIG_HOME="$HOME"/.config
 mkdir -p $HOME/.local/share/fonts
 cp $PWD/fonts/UbuntuMono* $HOME/.local/share/fonts
 
+git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+curl -sfL https://direnv.net/install.sh | bash
+curl -fsSL https://get.jetify.com/devbox | bash
+
 # brew packages Mac
 # amethyst fzf nvim exa hugo bash-completion@2 newsboat kubectl starship
 # brew install --cask alacritty
@@ -57,7 +61,8 @@ cp $PWD/fonts/UbuntuMono* $HOME/.local/share/fonts
 # sudo apt install gcc g++ unzip
 
 # ubuntu brew for vim and neovim setup
-# sudo apt install fd fzf kubectl kubectx derailed/k9s/k9s
+#sudo apt install fd fzf kubectl kubectx
+sudo apt install fzf
 # curl -sS https://starship.rs/install.sh | sh
 
 # ubuntu brew for neovim setup
@@ -104,26 +109,15 @@ create_symlinks() {
 common_directories=(
   "$XDG_CONFIG_HOME/alacritty"
   "$XDG_CONFIG_HOME/alacritty/themes"
-  #  "$XDG_CONFIG_HOME/skhd"
-  #  "$XDG_CONFIG_HOME/k9s"
-  #  "$XDG_CONFIG_HOME/qutebrowser"
-  #  "$XDG_CONFIG_HOME/waybar"
-  #  "$XDG_CONFIG_HOME/hypr"
 )
 
 common_items=(
   "alacritty.toml:$XDG_CONFIG_HOME/alacritty/alacritty.toml"
-  #  "k9s/skin.yml:$XDG_CONFIG_HOME/k9s/skin.yml"
   ".inputrc:$HOME/.inputrc"
   ".tmux.conf:$HOME/.tmux.conf"
   "nvim:$XDG_CONFIG_HOME/nvim"
-  #  "skhdrc:$XDG_CONFIG_HOME/skhd/skhdrc"
   ".zprofile:$HOME/.zprofile"
   ".zshrc:$HOME/.zshrc"
-  #  "qutebrowser/config.py:$XDG_CONFIG_HOME/qutebrowser/config.py"
-  #  "waybar/config.jsonc:$XDG_CONFIG_HOME/waybar/config.jsonc"
-  #  "waybar/style.css:$XDG_CONFIG_HOME/waybar/style.css"
-  #  "hypr/hyprland.conf:$XDG_CONFIG_HOME/hypr/hyprland.conf"
 )
 
 create_directories "${common_directories[@]}"
