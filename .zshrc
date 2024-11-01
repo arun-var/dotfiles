@@ -187,7 +187,7 @@ alias pc='pass show -c'
 
 # Source fzf completion if available
 if command -v fzf >/dev/null 2>&1; then
-#    source <(fzf --zsh)
+    source <(fzf --zsh)
 fi
 
 # ~~~~~~~~~~~~~~~ Completion ~~~~~~~~~~~~~~~~~~~~~~~~
