@@ -1,24 +1,3 @@
-# ~~~~~~~~~~~~~~~ SSH ~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-# Using GPG + YubiKey for ssh.
-# Don't execute when in dev container
-
-
-if [[ -z "$REMOTE_CONTAINERS" && -z "$CODESPACES" && -z "$DEVCONTAINER_TYPE" ]]; then
-  export GPG_TTY="$(tty)"
-  unset SSH_AGENT_PID
-
-  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-  fi
-
-  gpgconf --launch gpg-agent
-  gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
-
-fi
-
-
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -59,6 +38,10 @@ setopt extended_glob null_glob
 path=(
     $path                           # Keep existing PATH entries
     $HOME/bin
+    /bin
+    /usr/local/bin
+    /usr/local/MacGPG2/bin
+    /Users/arun/.asdf/shims/
     $HOME/.local/bin
     $SCRIPTS
     /opt/nvim-linux64/bin/
@@ -74,6 +57,26 @@ path=($^path(N-/))
 
 export PATH
 
+
+# ~~~~~~~~~~~~~~~ SSH ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+# Using GPG + YubiKey for ssh.
+# Don't execute when in dev container
+
+
+if [[ -z "$REMOTE_CONTAINERS" && -z "$CODESPACES" && -z "$DEVCONTAINER_TYPE" ]]; then
+  export GPG_TTY="$(tty)"
+  unset SSH_AGENT_PID
+
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+
+  gpgconf --launch gpg-agent
+  gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+
+fi
 
 # ~~~~~~~~~~~~~~~ Dev Container Specifics ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -108,6 +111,7 @@ else
   fpath+=($HOME/.zsh/pure)
 fi
 
+fpath+=($HOME/.zsh/pure)
 autoload -U promptinit; promptinit
 prompt pure
 
@@ -201,5 +205,7 @@ zstyle ':completion:*' menu select
 
 
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 if [ -e /home/arun/.nix-profile/etc/profile.d/nix.sh ]; then . /home/arun/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
