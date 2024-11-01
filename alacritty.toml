@@ -27,5 +27,5 @@ y = 0
 # Platform-specific shell configuration
 [shell]
 # Use zsh if available, otherwise fallback to default shell
-program = "/usr/bin/zsh"
+program = "/bin/zsh"
 args = ["--login"]

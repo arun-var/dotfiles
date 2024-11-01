@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e # Exit on error
 
@@ -15,15 +15,15 @@ export DOTFILES_DIR="$PWD"
 
 # Version definitions
 declare -A VERSIONS=(
-  ["neovim"]="0.9.5"
-  ["fzf"]="0.46.1"
-  ["hugo"]="0.123.7"
-  ["kubectl"]="1.29.2"
-  ["kubectx"]="0.9.5"
+  ["neovim"]="0.10.1"
+  ["fzf"]="0.55.0"
+  ["go"]="1.23.2"
+  ["hugo"]="0.136.5"
+  ["kubernetescli"]="1.30"
+  ["kubecontext"]="0.9.5"
   ["ripgrep"]="14.1.0"
   ["gh"]="2.44.1"
   ["lazygit"]="0.40.2"
-  ["go"]="1.22.1"
   ["tmux"]="3.3a"
   ["direnv"]="2.34.0"
   ["alacritty"]="0.13.1"
@@ -215,21 +215,22 @@ install_macos_packages() {
 
   # Define packages to install with versions
   local brew_packages=(
-    "amethyst"
+    #"amethyst"
     "fzf@${VERSIONS[fzf]}"
     "neovim@${VERSIONS[neovim]}"
-    "exa"
-    "hugo@${VERSIONS[hugo]}"
+    #"exa"
+    #"go@${VERSIONS[go]}"
+    #"hugo@${VERSIONS[hugo]}"
     "bash-completion@2"
     "newsboat"
-    "kubectl@${VERSIONS[kubectl]}"
-    "kubectx@${VERSIONS[kubectx]}"
+    "kubernetes-cli@${VERSIONS[kubernetescli]}"
+    "kubecontext@${VERSIONS[kubecontext]}"
     "ripgrep@${VERSIONS[ripgrep]}"
     "gh@${VERSIONS[gh]}"
     "lazygit@${VERSIONS[lazygit]}"
-    "go@${VERSIONS[go]}"
     "tmux@${VERSIONS[tmux]}"
     "direnv@${VERSIONS[direnv]}"
+    "reattach-to-user-namespace"
   )
 
   local cask_packages=(
