@@ -43,12 +43,17 @@ if [[ "$OSTYPE" == darwin* ]]; then
         /usr/local/MacGPG2/bin
         /opt/homebrew/bin
         /Users/$USER/.asdf/shims/
+        /Users/$USER/.local/bin/aws-cli
+	/System/Cryptexes/App/usr/bin
+	/usr/sbin
+	/sbin
     )
 else
     EXTRA_PATHS=(
         /usr/local/bin
         /home/$USER/.asdf/shims/
         /opt/nvim-linux64/bin/
+        /usr/local/opt/libpq/bin
     )
 fi
 
@@ -216,4 +221,3 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="/usr/local/opt/libpq/bin:$PATH"

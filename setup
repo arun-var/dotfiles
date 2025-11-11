@@ -15,8 +15,8 @@ export DOTFILES_DIR="$PWD"
 
 # Version definitions
 declare -A VERSIONS=(
-  ["neovim"]="0.10.1"
-  ["fzf"]="0.55.0"
+  ["neovim"]="0.11.5"
+  ["fzf"]="0.66.1"
   ["go"]="1.23.2"
   ["hugo"]="0.136.5"
   ["kubernetescli"]="1.30"
@@ -215,22 +215,32 @@ install_macos_packages() {
 
   # Define packages to install with versions
   local brew_packages=(
-    #"amethyst"
-    "fzf@${VERSIONS[fzf]}"
-    "neovim@${VERSIONS[neovim]}"
-    #"exa"
-    #"go@${VERSIONS[go]}"
-    #"hugo@${VERSIONS[hugo]}"
+ #   "amethyst"
+ #   "fzf@${VERSIONS[fzf]}"
+     "fzf"
+ #   "neovim@${VERSIONS[neovim]}"
+     "neovim"
+#    "exa"
+#    "go@${VERSIONS[go]}"
+#    "hugo@${VERSIONS[hugo]}"
     "bash-completion@2"
     "newsboat"
-    "kubernetes-cli@${VERSIONS[kubernetescli]}"
-    "kubecontext@${VERSIONS[kubecontext]}"
-    "ripgrep@${VERSIONS[ripgrep]}"
-    "gh@${VERSIONS[gh]}"
-    "lazygit@${VERSIONS[lazygit]}"
-    "tmux@${VERSIONS[tmux]}"
-    "direnv@${VERSIONS[direnv]}"
+#    "kubernetes-cli@${VERSIONS[kubernetescli]}"
+    "kubernetes-cli"
+#    "kubecontext@${VERSIONS[kubecontext]}"
+    "kubecontext"
+#    "ripgrep@${VERSIONS[ripgrep]}"
+    "ripgrep"
+#    "gh@${VERSIONS[gh]}"
+    "gh"
+#    "lazygit@${VERSIONS[lazygit]}"
+    "lazygit"
+#    "tmux@${VERSIONS[tmux]}"
+    "tmux"
+#    "direnv@${VERSIONS[direnv]}"
+    "direnv"
     "reattach-to-user-namespace"
+    "gnupg"
   )
 
   local cask_packages=(
@@ -377,6 +387,20 @@ install_common_deps() {
   if [[ "$1" == "linux" ]] && [ "$fonts_updated" = true ]; then
     log_info "Updating font cache..."
     fc-cache -f -v
+  fi
+
+  if [[ "$1" == "macos" ]] && [ "$fonts_updated" = true ]; then
+    log_info "Copying fonts to Library/Fonts for macOS..."
+    local mac_fonts_dir="$HOME/Library/Fonts"
+    for font in "$DOTFILES_DIR"/fonts/UbuntuMono*; do
+      local font_name=$(basename "$font")
+      if [ ! -f "$mac_fonts_dir/$font_name" ] || ! cmp -s "$font" "$mac_fonts_dir/$font_name"; then
+        cp "$font" "$mac_fonts_dir/"
+        log_info "Copied font: $font_name to $mac_fonts_dir"
+      else
+        log_skip "Font already exists in $mac_fonts_dir: $font_name"
+      fi
+    done
   fi
 
   # Install specific version of pynvim
