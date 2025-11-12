@@ -189,14 +189,34 @@ install_homebrew() {
   if ! command_exists brew; then
     log_info "Installing Homebrew..."
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    if [[ "$1" == "macos" ]]; then
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    else
-      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    fi
   else
     log_skip "Homebrew already installed"
+  fi
+
+  # Detect and initialize Homebrew path
+  if [[ "$1" == "macos" ]]; then
+    if [[ $(uname -m) == "arm64" ]]; then
+      # Apple Silicon
+      if [ -f "/opt/homebrew/bin/brew" ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      else
+        log_error "Expected Homebrew at /opt/homebrew not found."
+      fi
+    else
+      # Intel Mac
+      if [ -f "/usr/local/bin/brew" ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+      else
+        log_error "Expected Homebrew at /usr/local not found."
+      fi
+    fi
+  else
+    # Linuxbrew
+    if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    else
+      log_error "Expected Homebrew at /home/linuxbrew/.linuxbrew not found."
+    fi
   fi
 }
 
