@@ -1,20 +1,34 @@
-# themes from https://github.com/alacritty/alacritty-theme
-
-# import = ["/Users/mischa/.config/alacritty/themes/themes/gruvbox_dark.toml"]
-import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
-
 [font]
+# Adjust font size based on platform
 size = 18
 
 [font.normal]
+# Use a Nerd Font that works well on both platforms
 family = "UbuntuMono Nerd Font"
 
-#[window]
-#decorations = "none"
+[window]
+# Optional: Uncomment to remove window decorations
+# decorations = "none"
 
 [window.padding]
 x = 7
 y = 0
 
-[shell]
-program = "/usr/bin/zsh"
+[general]
+# Cross-platform Alacritty configuration
+
+# Detect and import theme based on platform
+import = [
+    # Mac theme path
+    "{{ env:HOME }}/.config/alacritty/themes/themes/gruvbox_dark.toml",
+    # Linux theme path
+    "{{ env:HOME }}/.config/alacritty/gruvbox_dark.toml"
+]
+
+[terminal]
+
+# Platform-specific shell configuration
+[terminal.shell]
+# Use zsh if available, otherwise fallback to default shell
+program = "/bin/zsh"
+args = ["--login"]
