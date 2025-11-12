@@ -405,8 +405,10 @@ install_common_deps() {
 
   # Install specific version of pynvim
   if ! python3 -m pip list | grep -q "pynvim"; then
+    log_info "installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
     log_info "Installing pynvim..."
-    python3 -m pip install --user "pynvim==0.5.0"
+    uv tool install --upgrade pynvim
   else
     log_skip "pynvim already installed"
   fi
