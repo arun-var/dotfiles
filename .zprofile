@@ -1,19 +1,38 @@
-# Only run on macOS
+# ==========================================================
+# ~/.zprofile — environment setup for login shells
+# ==========================================================
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-	# needed for brew
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-  export XDG_RUNTIME_DIR="$HOME"/Library/Caches/TemporaryItems
-else
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  export XDG_RUNTIME_DIR="$HOME"/Library/Caches/TemporaryItems
+# ~~~~~~~~~~~~~~~ OS Detection ~~~~~~~~~~~~~~~~~~~~~~~~
+IS_MACOS=false
+IS_LINUX=false
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  IS_MACOS=true
+elif [[ "$OSTYPE" == linux* ]]; then
+  IS_LINUX=true
 fi
 
-# Only run these on Ubuntu and Fedora
+# ~~~~~~~~~~~~~~~ Homebrew Setup ~~~~~~~~~~~~~~~~~~~~~~~~
 
-#if [[ $(grep -E "^(ID|NAME)=" /etc/os-release | grep -Eq "ubuntu|fedora")$? == 0 ]]; then
-	# needed for brew to work
-#	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#fi
+# Detect and set correct Homebrew prefix
+if $IS_MACOS; then
+  if [[ $(uname -m) == "arm64" ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"   # Apple Silicon
+  else
+    export HOMEBREW_PREFIX="/usr/local"      # Intel
+  fi
+elif $IS_LINUX; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+fi
 
-export XDG_CONFIG_HOME="$HOME"/.config
+# Initialize Homebrew environment early
+if [[ -x "$HOMEBREW_PREFIX/bin/brew" ]]; then
+  eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+fi
+
+# ~~~~~~~~~~~~~~~ XDG Base Directories ~~~~~~~~~~~~~~~~~~~~~~~~
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# ~~~~
